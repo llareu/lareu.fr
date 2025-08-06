@@ -1,0 +1,26 @@
+{% extends 'layout.twig' %}
+
+{% block title new.title %}
+
+{% block body %}
+
+    <h1>{{ new.title }}</h1>
+
+    <p class="text-muted">
+        {% if new.category_id %}
+            <a 
+                href="{{ path('news.category', { slug: new.category_slug }) }}" 
+                title="{{ new.category_name }}"
+            >
+                {{ new.category_name }}
+            </a>
+        {% endif %}
+
+        {{ new.created_at | ago }}
+    </p>
+
+    <p class="w-auto p-1">
+        {{ new.content | nl2br }}
+    </p>
+
+{% endblock %}

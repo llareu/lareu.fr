@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title "ESPADON PROJECT" %}</title>
+
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css"
+                integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+            <link 
+                rel="stylesheet" 
+                href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.css" 
+                integrity="sha512-EM9iXXndA8L72Sgf6i5hYHnfcGNchX5oDY6E/GNvb6CXyEXxyzXeSiXHK9UEpQw+cKD8C4ZU/Qn4HI0z8JPENg==" 
+                crossorigin="anonymous" 
+                referrerpolicy="no-referrer" 
+            >
+
+        <style>
+            body {
+                padding-top: 5rem;
+            }
+
+            .logo {
+                width: 3rem;
+                height:auto;
+            }
+
+            nav {
+                background-color:#034d00;
+            }
+
+            .nav-item {
+                padding-top: 0.6rem;
+            }
+            p {
+                text-align: justify;
+            }
+        </style>
+
+    </head>
+
+    <body>
+
+        <nav class="navbar navbar-dark navbar-fixed-top">
+            <a class="navbar-brand" href="{{path('admin')}}">Administration</a>
+            <ul class="nav navbar-nav">
+                {{ admin_menu() }}
+            </ul>
+        </nav>
+
+        <div class="container">
+
+            {% if flash('success') %}
+
+            <div class="alert alert-success">
+                {{ flash('success') }}
+            </div>
+
+            {% endif %}
+
+            {% if flash('error') %}
+
+            <div class="alert alert-danger">
+                {{ flash('error') }}
+            </div>
+
+            {% endif %}
+
+            {% block body %}{% endblock %}
+
+        </div><!-- /.container -->
+
+                
+        <script 
+            src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.js" 
+            integrity="sha512-iCDiy78JjIlS3o0RK85JlNJdDfPGvi7virZOehKal/ZlYOymHf3rqvtDE84GNYCIUAmYjeg0c/U/cYB04rurYA==" 
+            crossorigin="anonymous">
+        </script>
+        
+        <script>
+            flatpickr('.datepickr', {
+                enableTime: true,
+                altInput: true,
+                altFormat: 'j F Y, H:i',
+                dateFormat: 'Y-m-d H:i:S'
+            });
+        </script>
+
+        <script 
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" 
+            integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" 
+            crossorigin="anonymous">
+        </script>
+
+    </body>
+
+</html>

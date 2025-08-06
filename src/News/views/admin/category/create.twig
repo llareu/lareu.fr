@@ -1,0 +1,17 @@
+{% extends '@admin/layout.twig' %}
+
+{% block title "ESPADON/Admin : Créer les catégories" %}
+
+{% block body %}
+
+    <h1>Ajouter une categorie</h1>
+
+    <form action="{{ path(routePrefix ~ '.create') }}" method="post">
+    
+        {% include viewPath ~ '/form.twig' %}
+
+        <button class="btn btn-primary" type="submit">Valider</button>
+
+    </form>
+
+{% endblock %}

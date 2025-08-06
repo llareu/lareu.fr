@@ -1,0 +1,79 @@
+{% extends 'layout.twig' %}
+
+{% block title %}
+    {% if category %}
+        Catégorie : {{ category.title }} {% if page > 1 %}, page {{page}} {% endif %}
+    {% else %}
+        NEWS {% if page > 1 %}, page {{page}} {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% if category %}
+        <h1>Catégorie: {{ category.title }} {% if page > 1 %}, page {{page}} {% endif %}</h1>
+    {% else %}
+        <h1>NEWS {% if page > 1 %}, page {{page}} {% endif %}</h1>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-9">
+            {% for row in news | batch(3) %}
+                <div class="card-deck">
+                    {% for n in row %}
+                        <div class="card">
+                            {% if n.category_name %}
+                                <div class="card-header">
+                                    {{ n.category_name }}
+                                </div>
+                            {% endif %}
+
+                            <div class="card-block">
+                                <h4 class="card-title">
+                                    <center>
+                                        <a href="{{ path('news.show', {slug:n.slug, id: n.id}) }}">{{ n.title }}</a>
+                                    </center>
+                                </h4>
+                            </div>
+            
+
+                            <div class="card-block">
+                                <p class="w-auto p-0.5">
+                                    {{ n.content | excerpt | nl2br }}
+                                </p>
+                                <p class="text-muted">
+                                    {{ n.created_at | ago }}
+                                </p>
+                            </div>  
+
+                            <div class="card-footer">
+                                <a href="{{ path('news.show', {slug: n.slug, id: n.id}) }}" class="btn btn-primary" >
+                                    Voir+
+                                </a>
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            {% if category %}
+            {{ paginate(news, 'news.category', {slug: category.slug}) }}
+            {% else %}
+            {{ paginate(news, 'news.index') }}
+            {% endif %}
+
+        </div>
+        <div class="col-md-3">
+            <ul class="list-group">
+                {% for c in categories %}
+                <li class="list-group-item {% if c.id == category.id %}active{% endif %}">
+                    <a style="color:inherit;" href="{{ path('news.category', {slug: c.slug}) }}" >
+                        {{ c.title }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,45 @@
+{% extends '@admin/layout.twig' %}
+
+{% block title "ESPADON/Admin : Gestion des news" %}
+
+{% block body %}
+
+
+
+    <p class="text-right">
+        <a href="{{ path(routePrefix ~ '.create') }}" class="btn btn-success">
+            Ajouter une news
+        </a>
+    </p>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>Titre</td>
+                <td>Catégorie</td>
+                <td>Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% set token_input = csrf_input() %}
+            {% for item in items %}
+            <tr>
+                <td>{{ item.title }}</td>
+                <td>{{ item.category_name }}</td>
+                <td>
+                    <a href="{{ path(routePrefix ~ '.edit', {id: item.id}) }}" class="btn btn-warning">Editer</a>
+                    <form style="display: inline" method="POST" action="{{ path(routePrefix ~ '.delete', {id: item.id}) }}">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button class="btn btn-danger">Supprimer</button>
+                        {{ token_input | raw}}
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {{ paginate(items, routePrefix ~ '.index') }}
+
+{% endblock %}
+

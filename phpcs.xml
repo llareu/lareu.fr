@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<ruleset name="App">
+    <description>Les règles de formatage</description>
+
+    <arg name="colors"/>
+    <arg value="p"/>
+
+    <files>src</files>
+    <files>public/index.php</files>
+
+    <exclude-pattern>*/db/*</exclude-pattern>
+
+    <rule ref="PSR2"></rule>
+</ruleset>
