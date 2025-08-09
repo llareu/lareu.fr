@@ -11,9 +11,14 @@ class TwigRendererFactory
 {
     public function __invoke(ContainerInterface $container): TwigRenderer
     {
+        $debug = $container->get('env') !== 'production';
         $viewPath = $container->get('views.path');
         $loader = new FilesystemLoader($viewPath);
-        $twig = new Environment($loader, ['debug' => true]);
+        $twig = new Environment($loader, [
+            'debug' => $debug,
+            'cache' => $debug ? false : 'tmp/cache/',
+            'auto_reload' => $debug,
+        ]);
         $twig->addExtension(new DebugExtension);
         if ($container->has('twig.ext')) {
             foreach ($container->get('twig.ext') as $ext) {

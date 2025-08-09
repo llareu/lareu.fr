@@ -1,5 +1,4 @@
 <?php
-require dirname(__DIR__).DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
 
 use Core\App;
 use Root\News\NewsModule;
@@ -15,14 +14,21 @@ use Core\Middleware\ {
 };
 use Middlewares\Whoops;
 
+chdir(dirname(__DIR__));
+
+require 'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
+
 $modules = [
     AdminModule::class,
     NewsModule::class,
     BookmarkManagerModule::class,
 ];
 
+// chargement du fichier .env
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
 
-$app = (new App(dirname(__DIR__).DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'config.php'))
+$app = (new App('config'.DIRECTORY_SEPARATOR.'config.php'))
     ->addModule(NewsModule::class)
     ->addModule(AdminModule::class)
     ->addModule(BookmarkManagerModule::class)

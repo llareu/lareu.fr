@@ -27,11 +27,8 @@ use function \DI\{
     get
 };
 
-// chargement du fichier .env
-$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
-$dotenv->load();
-
 return [
+    'env' => $_ENV['ENV'] ?? 'production',
     'db.host' => $_ENV['DB_HOST'] ?? 'localhost',
     'db.user' => $_ENV['DB_USER'] ?? 'root',
     'db.pass' => $_ENV['DB_PWD'] ?? '',
@@ -62,7 +59,7 @@ return [
             [
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-            ]
+                ]
             );
-    },
-];
+        },
+    ];
