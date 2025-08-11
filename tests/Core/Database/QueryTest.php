@@ -49,4 +49,30 @@ class QueryTest extends DatabaseTestCase
         $this->assertEquals(29, $news);
     }
 
+    public function testHydrateEntity() {
+        $pdo = $this->getPDO();
+        $this->migrateDatabase($pdo);
+        $this->seedDatabase($pdo);
+        $news = (new Query($pdo))->from('bg_news', 'n')
+        ->into(Demo::class)
+        ->all();
+        
+
+        $this->assertEquals('demo', substr($news[0]->getSlug(), -4));
+    }
+
+    public function testLazyHydrate() {
+        $pdo = $this->getPDO();
+        $this->migrateDatabase($pdo);
+        $this->seedDatabase($pdo);
+        $news = (new Query($pdo))->from('bg_news', 'n')
+        ->into(Demo::class)
+        ->all();
+        $news1 = $news[0];
+        $news2 = $news[1];
+        
+
+        $this->assertSame($news1, $news2);
+    }
+
 }

@@ -13,11 +13,11 @@ class NewsEntity extends \stdClass
 
     public $content;
 
-    public $created_at;
+    public $createdAt;
 
-    public $updated_at;
+    public $updatedAt;
 
-    public $category_name;
+    public $categoryName;
 
     public function __construct()
     {
@@ -27,6 +27,20 @@ class NewsEntity extends \stdClass
 
         if ($this->updated_at) {
             $this->updated_at = new \DateTime($this->updated_at);
+        }
+    }
+
+    public function setcreatedAt($datetime)
+    {
+        if (is_string($datetime)) {
+            $this->createdAt = new DateTime($datetime);
+        }
+    }
+
+    public function setupdatedAt($datetime)
+    {
+        if (is_string($datetime)) {
+            $this->createdAt = new DateTime($datetime);
         }
     }
 }

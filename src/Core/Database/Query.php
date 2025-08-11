@@ -10,6 +10,8 @@ class Query
 
     private $where = [];
 
+    private $entity;
+
     private $group;
 
     private $order;
@@ -19,6 +21,7 @@ class Query
     private $pdo;
 
     private $params;
+
 
     public function __construct(?\PDO $pdo = null)
     {
@@ -59,6 +62,23 @@ class Query
         $this->params = $params;
         return $this;
     }
+
+    public function into(string $entity): self
+    {
+        $this->entity = $entity;
+        return $this;
+    }
+
+    public function all(): QueryResult
+    {
+        return new QueryResult(
+            $this->execute()->fetchAll(\PDO::FETCH_ASSOC),
+            $this->entity
+        );
+    }
+
+
+
 
     public function __toString()
     {
